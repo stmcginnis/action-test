@@ -1,0 +1,3 @@
+tags:
+  apiserver: &apiserver-tag "fc0d4b4a0d163ec9d2865f8fb02a347914c5b7be"
+  worker: &worker-tag "a83f9ebcde0d2978413d45670bb8f02c592087e3"
