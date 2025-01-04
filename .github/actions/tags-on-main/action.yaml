@@ -1,0 +1,40 @@
+name: "Check deployment tags are from main"
+description: "Verify that the tags used for deployment are present on the main branch."
+inputs:
+  deploy-values:
+    description: "The deployment values file to validate"
+    required: false
+    default: "charts/values-prod.yaml"
+outputs:
+  tagsexist:
+    description: "Set to 'true' if the tags in the deployment file correspond to commits on main."
+    value: ${{ steps.check-tags.exists }}
+
+# Note: assumes code has already been checked out.
+runs:
+  using: "composite"
+  steps:
+    - id: check-tags
+      name: "Check deployment tags"
+      shell: bash
+      run: |
+        # Need to make sure we have all info if shallow clone
+        git remote set-branches origin '*'
+        git fetch
+        echo "Branches"
+        git branch
+        echo "History"
+        git log --oneline
+        # Default value
+        output="exists=true"
+        # Check the values file tags and see if they are on main
+        for tag in $(grep "&.*-tag" ${{ inputs.deploy-values }} | awk '{print $3}'); do
+          in_main=$(git branch -a --contains "${tag:1:-1}" | grep "origin/main");
+          if [[ -z $in_main ]]; then
+            echo "Tag ${tag} is not on the main branch!!"
+            output="exists=false"
+          else
+            echo "Tag ${tag} is good"
+          fi
+        done
+        echo $output >> $GITHUB_OUTPUT
