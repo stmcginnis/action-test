@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Check exit
-        if: ${{ needs.validate-tags.outputs.tagsexist }} == "false"
+        if: ${{ needs.validate-tags.outputs.tagsexist == false }}
         uses: actions/github-script@v7
         with:
           script: |
