@@ -27,7 +27,7 @@ runs:
 
         # Check the values file tags and see if they are on main
         for tag in $(grep "&.*-tag" ${{ inputs.deploy-values }} | awk '{print $3}'); do
-          in_main=$(git branch -a --contains "${tag:1:-1}" | grep "origin/main");
+          in_main=$(git branch -a --contains "${tag:1:-1} || echo 'commit not found'" | grep "origin/main");
           if [[ -z $in_main ]]; then
             echo "Tag ${tag} is not on the main branch!!"
             output="exists=false"
