@@ -21,12 +21,10 @@ runs:
         # Need to make sure we have all info if shallow clone
         git remote set-branches origin '*'
         git fetch
-        echo "Branches"
-        git branch
-        echo "History"
-        git log --oneline
+
         # Default value
         output="exists=true"
+
         # Check the values file tags and see if they are on main
         for tag in $(grep "&.*-tag" ${{ inputs.deploy-values }} | awk '{print $3}'); do
           in_main=$(git branch -a --contains "${tag:1:-1}" | grep "origin/main");
@@ -37,4 +35,5 @@ runs:
             echo "Tag ${tag} is good"
           fi
         done
+        echo $output
         echo $output >> $GITHUB_OUTPUT
