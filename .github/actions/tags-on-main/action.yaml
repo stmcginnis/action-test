@@ -8,7 +8,7 @@ inputs:
 outputs:
   exists:
     description: "Set to 'true' if the tags in the deployment file correspond to commits on main."
-    value: ${{ steps.check-tags.exists }}
+    value: ${{ steps.check-tags.outputs.exists }}
 
 # Note: assumes code has already been checked out.
 runs:
