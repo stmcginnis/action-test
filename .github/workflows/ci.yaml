@@ -21,3 +21,8 @@ jobs:
         with:
           script: |
             core.setFailed('Deployment tags are not on main branch!')
+
+      - name: Other stuff
+        run: |
+          echo "Past check exit"
+          echo "tagsexist was ${{ steps.validate-tags.outputs.tagsexist }}"
