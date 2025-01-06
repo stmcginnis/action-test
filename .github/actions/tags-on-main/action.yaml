@@ -6,7 +6,7 @@ inputs:
     required: false
     default: "charts/values-prod.yaml"
 outputs:
-  tagsexist:
+  exists:
     description: "Set to 'true' if the tags in the deployment file correspond to commits on main."
     value: ${{ steps.check-tags.exists }}
 

@@ -16,7 +16,7 @@ jobs:
         id: validate-tags
 
       - name: Check exit
-        if: ${{ steps.validate-tags.outputs.tagsexist == 'false' }}
+        if: ${{ steps.validate-tags.outputs.exists == 'false' }}
         uses: actions/github-script@v7
         with:
           script: |
@@ -25,4 +25,4 @@ jobs:
       - name: Other stuff
         run: |
           echo "Past check exit"
-          echo "tagsexist was ${{ steps.validate-tags.outputs.tagsexist }}"
+          echo "tagsexist was ${{ steps.validate-tags.outputs.exists }}"
