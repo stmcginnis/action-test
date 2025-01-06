@@ -13,6 +13,8 @@ jobs:
 
       - name: Validate tags
         uses: ./.github/actions/tags-on-main
+        with:
+          deploy-values: charts/values-staging.yaml
         id: validate-tags
 
       - name: Check exit
